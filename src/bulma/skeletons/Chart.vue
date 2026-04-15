@@ -146,6 +146,7 @@ const surfaceStyle = computed(() => ({
             position: relative;
             display: grid;
             align-items: end;
+            justify-items: center;
             grid-template-columns: repeat(6, minmax(0, 1fr));
             gap: 0.85rem;
             min-height: 13rem;
@@ -157,7 +158,9 @@ const surfaceStyle = computed(() => ({
 
         .enso-skeleton__bar {
             display: block;
-            border-radius: 999px 999px 0 0;
+            width: 52%;
+            max-width: 1rem;
+            border-radius: 0.15rem 0.15rem 0 0;
             min-height: 2.5rem;
 
             &--1 { height: 42%; }
