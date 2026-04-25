@@ -49,9 +49,9 @@ import { Loader, Skeleton } from '@enso-ui/loader/bulma';
 Import: `@enso-ui/loader/bulma`
 
 #### `Loader`
-- `color: string = "#f44336"`
-- `size: "small" | "medium" | "large" = "medium"`
 - `transparent: boolean = false`
+- accepts Bulma color classes: `is-primary`, `is-link`, `is-info`, `is-success`, `is-warning`, `is-danger`, `is-light`, `is-dark`, `is-white`, `is-black`
+- accepts size classes: `is-small`, `is-medium`, `is-large`
 
 #### `Overlay`
 - `transparent: boolean = false`
@@ -79,4 +79,3 @@ Thank you to all the people who already contributed to Enso!
 ## License
 
 [MIT](https://github.com/enso-ui/loader/blob/master/LICENSE)
-

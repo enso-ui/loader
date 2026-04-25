@@ -1,6 +1,6 @@
 {
   "name": "@enso-ui/loader",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "description": "Loaders, overlays, and skeleton placeholders for Enso UI",
   "main": "src/bulma/Loader.vue",
   "repository": {

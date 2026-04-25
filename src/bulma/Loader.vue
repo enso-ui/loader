@@ -1,29 +1,21 @@
 <template>
     <overlay :transparent="transparent"
         v-if="visible">
-        <div :class="['loader', `is-${size}`]"
-            :style="borderColor"/>
+        <div class="loader"
+            v-bind="$attrs"/>
     </overlay>
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import Overlay from './Overlay.vue';
 
 defineOptions({
     name: 'Loader',
+    inheritAttrs: false,
 });
 
-const props = defineProps({
-    color: {
-        type: String,
-        default: '#f44336',
-    },
-    size: {
-        type: String,
-        default: 'medium',
-        validator: value => ['small', 'medium', 'large'].includes(value),
-    },
+defineProps({
     transparent: {
         type: Boolean,
         default: false,
@@ -32,10 +24,6 @@ const props = defineProps({
 
 const visible = ref(false);
 
-const borderColor = computed(() => ({
-    'border-color': props.color,
-}));
-
 onMounted(() => {
     visible.value = true;
 });
@@ -43,28 +31,94 @@ onMounted(() => {
 
 <style lang="scss">
     .overlay.is-overlay .loader {
+        --enso-loader-outer-width: 3px;
+        --enso-loader-middle-width: 2px;
+        --enso-loader-inner-width: 1px;
+
+        position: relative;
         margin: auto;
-        -webkit-animation: spinAround 500ms infinite linear;
-        animation: spinAround 500ms infinite linear;
+        box-sizing: border-box;
+        width: 4em;
+        height: 4em;
+        border: 0;
+        border-right: var(--enso-loader-outer-width) solid currentColor;
         border-radius: 50%;
         content: "";
+        animation: enso-loader-spin-right 800ms linear infinite;
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            display: block;
+            box-sizing: border-box;
+            border-radius: 50%;
+        }
+
+        &::before {
+            inset: 12.5%;
+            border: 0;
+            border-left: var(--enso-loader-middle-width) solid currentColor;
+            animation: enso-loader-spin-left 800ms linear infinite;
+        }
+
+        &::after {
+            inset: 25%;
+            border: 0;
+            border-right: var(--enso-loader-inner-width) solid currentColor;
+        }
+
+        @each $color in "primary", "link", "info", "success", "warning", "danger", "light", "dark", "white", "black" {
+            &.is-#{$color} {
+                color: var(--bulma-#{$color});
+            }
+        }
 
         &.is-small {
-            height: 1em;
-            width: 1em;
-            border-width: 0 0 2px 2px;
+            --enso-loader-outer-width: 2px;
+            --enso-loader-middle-width: 1px;
+            --enso-loader-inner-width: 1px;
+
+            width: 3em;
+            height: 3em;
         }
 
         &.is-medium {
-            width: 2em;
-            height: 2em;
-            border-width: 0 0 3px 3px;
+            --enso-loader-outer-width: 4px;
+            --enso-loader-middle-width: 3px;
+            --enso-loader-inner-width: 2px;
+
+            width: 5em;
+            height: 5em;
         }
 
         &.is-large {
-            width: 3em;
-            height: 3em;
-            border-width: 0 0 4px 4px;
+            --enso-loader-outer-width: 5px;
+            --enso-loader-middle-width: 4px;
+            --enso-loader-inner-width: 2px;
+
+            width: 6em;
+            height: 6em;
+        }
+    }
+
+    @keyframes enso-loader-spin-left {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(720deg);
+        }
+    }
+
+    @keyframes enso-loader-spin-right {
+        from {
+            transform: rotate(360deg);
+        }
+
+        to {
+            transform: rotate(0deg);
         }
     }
 </style>
